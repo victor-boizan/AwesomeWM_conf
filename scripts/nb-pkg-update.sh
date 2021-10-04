@@ -2,7 +2,7 @@
 
 # This scrips is made to output the number of packages to update on the system.
 
-function_Gentoo_Linux () {
+function_Gentoo () {
 	NB=$(emerge -pv --update --changed-use --deep @world | awk '{if ($1 == "Total:"){print $2}}')
 	echo $NB
 }

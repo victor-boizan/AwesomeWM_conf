@@ -101,6 +101,19 @@ local globalKeys = awful.util.table.join(
 )
 -- }}}
 -- {{{ tags
+globalKeys = awful.util.table.join(
+	globalKeys,
+	-- View next tag
+  awful.key({modkey, 'Control'}, 'Right', function()
+		local screen = awful.screen.focused()
+	  awful.tag.viewnext (screen)	
+	end, {description = 'View next tag', group = 'tag'}),
+	-- View previous tag
+awful.key({modkey, 'Control'}, 'Left', function()
+		local screen = awful.screen.focused()
+	  awful.tag.viewprev (screen)	
+	end, {description = 'View prev tag', group = 'tag'})
+)	
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it works on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 0.
@@ -142,7 +155,9 @@ for i = 1, 10 do
 			local tag = _G.client.focus.screen.tags[i]
 			if tag then _G.client.focus:toggle_tag(tag) end
 		end
-	end, descr_toggle_focus))
+	end, descr_toggle_focus)
+
+	)
 end
 --}}}
 --}}}
@@ -162,7 +177,7 @@ local clientkeys = awful.util.table.join(
 			c:raise()
 		end,
 		{description = "toggle fullscreen", group = "client"}),
-	awful.key({ modkey, "Shift"   }, "space" ,              awful.client.floating.toggle        ,
+	awful.key({ modkey, alt   }, "space" ,             function(c) c.floating = not c.floating end        ,
 		{description = "toggle floating",   group = "client"}),
 	awful.key({modkey,            }, "s"     , function (c) c.sticky = not c.sticky end,
 		{description = "toggle sticky"     , group = "client"}),
